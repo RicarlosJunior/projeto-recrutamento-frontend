@@ -1,0 +1,85 @@
+<br />
+<div class="container">
+  <div class="row">
+    <div class="col-lg-2"></div>
+    <div class="col-lg-8">
+      <div class="card">
+        <div class="card-body">
+          <h3>Detalhes do Usuário</h3>
+          <br>
+          <div class="row">
+            <div class="col-2">
+              <mdb-form-control>
+                <input mdbInput type="text" id="id" class="form-control" [(ngModel)]="usuario.id" [readonly]="true" />
+                <label mdbLabel class="form-label" for="id">Id</label>
+              </mdb-form-control>
+            </div>
+            <div class="col-10">
+              <mdb-form-control>
+                <input mdbInput type="text" id="nome" class="form-control" [(ngModel)]="usuario.nome" />
+                <label mdbLabel class="form-label" for="nome">Nome</label>
+              </mdb-form-control>
+            </div>
+          </div>
+          <br>
+          <div class="row">
+            <div class="col-12">
+              <mdb-form-control>
+                <input mdbInput type="text" id="email" class="form-control" [(ngModel)]="usuario.email" />
+                <label mdbLabel class="form-label" for="email">Email</label>
+              </mdb-form-control>
+            </div>
+          </div>
+          <br>
+          <div class="row" *ngIf="(usuario.id == null || usuario.id == 0 || (usuario.id === usuarioLogadoId))">
+            <div class="col-6">
+              <mdb-form-control>
+                <input mdbInput type="password" id="senha" class="form-control" [(ngModel)]="usuario.senha" />
+                <label mdbLabel class="form-label" for="senha">Senha</label>
+              </mdb-form-control>
+            </div>
+            <div class="col-6">
+                <mdb-form-control>
+                  <input mdbInput type="password" id="confirmSenha" class="form-control" [(ngModel)]="confirmeSenha" />
+                  <label mdbLabel class="form-label" for="confirmSenha">Confirme Senha</label>
+                </mdb-form-control>
+              </div>
+          </div>
+          <br>
+          <label mdbLabel class="form-label" style="padding-right:15px;">Tipo de Usuário:</label>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="admin" value="ADMIN"
+              [(ngModel)]="usuario.tipoUsuario" [disabled]="!isAdmin()"/>
+            <label class="form-check-label" for="admin">Administrador</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="colaborador" value="COLABORADOR"
+              [(ngModel)]="usuario.tipoUsuario" [disabled]="!isAdmin()"/>
+            <label class="form-check-label" for="colaborador">Colaborador</label>
+          </div>
+          <br>
+          <hr class="hr" />
+          <br>
+          <div class="row">
+            <div class="col-md-9">
+              <button type="button" class="btn btn-primary me-2 btn-sm btn-rounded" mdbRipple (click)="criar()"
+                *ngIf="(usuario.id == null || usuario.id == 0) && isAdmin()">
+                Gravar
+              </button>
+              <button type="button" class="btn btn-primary me-2 btn-sm btn-rounded" mdbRipple (click)="alterar()"
+                *ngIf="usuario.id! > 0">
+                Alterar
+              </button>
+              <button type="button" class="btn btn-primary me-2 btn-sm btn-rounded" mdbRipple
+                routerLink="/principal/usuarios" *ngIf="isAdmin()">
+                Voltar
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-2"></div>
+    </div>
+  </div>
+</div>
+

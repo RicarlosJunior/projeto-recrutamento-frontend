@@ -24,6 +24,10 @@ export class LoginComponent {
 
   constructor(private loginService: LoginService, private router: Router){}
 
+  novoUsuario(){
+    this.router.navigate(["usuarios/criar"]);
+  }
+
   logar() {
     this.loginService.logar(this.email, this.senha).subscribe({
       next: () => {
@@ -33,7 +37,7 @@ export class LoginComponent {
         Swal.fire({
           title: 'Atenção',
           icon: 'error',
-          text: 'Falha na autenticação. Verifique suas credenciais.',
+          text: erro.message,
           confirmButtonText: 'Ok',
         });
       }

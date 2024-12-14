@@ -10,6 +10,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { Vaga } from '../../../models/vaga';
 import { VagasService } from '../../../services/vagas.service';
 import { CandidaturasService } from '../../../services/candidaturas.service';
+import { UtilsService } from '../../../services/utils.service';
 
 
 
@@ -19,7 +20,8 @@ import { CandidaturasService } from '../../../services/candidaturas.service';
   imports: [MdbFormsModule, FormsModule, CommonModule, RouterLink, MdbModalModule, HttpClientModule],
   providers: [
     VagasService,
-    CandidaturasService
+    CandidaturasService,
+    UtilsService
   ],
   templateUrl: './vagasdetails.component.html',
   styleUrl: './vagasdetails.component.scss'
@@ -35,10 +37,19 @@ export class VagasdetailsComponent {
   vaga: Vaga = new Vaga();
   usuarioRole: string | null = null;
 
-  constructor(private router: ActivatedRoute, 
-              private vagasService: VagasService, 
-              private routerNavegacao: Router,
-              private candidaturasService: CandidaturasService) {
+  statusVaga = [
+    'ABERTA',
+    'FECHADA',
+    'CANCELADA',
+    'PREENCHIDA',
+    'SUSPENSA'
+  ]
+
+  constructor(private router: ActivatedRoute,
+    private vagasService: VagasService,
+    private routerNavegacao: Router,
+    private candidaturasService: CandidaturasService,
+    private utilsService: UtilsService) {
 
     let id = this.router.snapshot.params['id'];
     if (id > 0) {
@@ -107,18 +118,22 @@ export class VagasdetailsComponent {
         this.vaga = vagaConsultada;
       },
       error: erro => {
-        const errorMessage = erro.error || 'Ocorreu um erro inesperado.';
+
+        let mensagem = "Ocorreu um erro inesperado.";
+        if (erro.status) {
+          mensagem = this.utilsService.mensagemErroStatus(erro.status);
+        }
         Swal.fire({
           title: 'Atenção',
           icon: 'error',
-          text: errorMessage,
+          text: mensagem,
           confirmButtonText: 'Ok',
         });
       }
     });
   }
 
-  candidatar(){
+  candidatar() {
 
     const usuarioId = Number(sessionStorage.getItem('id'));
 
@@ -133,11 +148,15 @@ export class VagasdetailsComponent {
         this.routerNavegacao.navigate(['principal/vagas']);
       },
       error: erro => {
-        const errorMessage = erro.error || 'Ocorreu um erro inesperado.';
+
+        let mensagem = "Ocorreu um erro inesperado.";
+        if (erro.status) {
+          mensagem = this.utilsService.mensagemErroStatus(erro.status);
+        }
         Swal.fire({
           title: 'Atenção',
           icon: 'error',
-          text: errorMessage,
+          text: mensagem,
           confirmButtonText: 'Ok',
         });
       }
@@ -145,52 +164,91 @@ export class VagasdetailsComponent {
   }
 
   criar() {
- 
-    this.vaga.responsavelId = Number(sessionStorage.getItem('id'));
+    if (this.validarCamposVaga()) {
 
-    this.vagasService.criar(this.vaga).subscribe({
-      next: vaga => {
-        Swal.fire({
-          title: "Sucesso",
-          icon: 'success',
-          text: 'Operação realizada com sucesso!',
-          confirmButtonText: 'Ok',
-        });
-        this.routerNavegacao.navigate(['principal/vagas'], { state: { vagaNova: this.vaga } });
-      },
-      error: erro => {
-        const errorMessage = erro.error || 'Ocorreu um erro inesperado.';
-        Swal.fire({
-          title: 'Atenção',
-          icon: 'error',
-          text: errorMessage,
-          confirmButtonText: 'Ok',
-        });
-      }
-    });
+      this.vaga.responsavelId = Number(sessionStorage.getItem('id'));
 
+      this.vagasService.criar(this.vaga).subscribe({
+        next: vaga => {
+          Swal.fire({
+            title: "Sucesso",
+            icon: 'success',
+            text: 'Operação realizada com sucesso!',
+            confirmButtonText: 'Ok',
+          });
+          this.routerNavegacao.navigate(['principal/vagas'], { state: { vagaNova: this.vaga } });
+        },
+        error: erro => {
+
+          let mensagem = "Ocorreu um erro inesperado.";
+          if (erro.status) {
+            mensagem = this.utilsService.mensagemErroStatus(erro.status);
+          }
+          Swal.fire({
+            title: 'Atenção',
+            icon: 'error',
+            text: mensagem,
+            confirmButtonText: 'Ok',
+          });
+        }
+      });
+    }
   }
 
   alterar() {
-    this.vagasService.alterar(this.vaga.id!, this.vaga).subscribe({
-      next: vaga => {
-        Swal.fire({
-          title: "Sucesso",
-          icon: 'success',
-          text: "Vaga alterada com sucesso!",
-          confirmButtonText: 'Ok',
-        });
-        this.routerNavegacao.navigate(['admin/vendas'], { state: { vagaEditada: this.vaga } });
-      },
-      error: erro => {
-        const errorMessage = erro.error || 'Ocorreu um erro inesperado.';
-        Swal.fire({
-          title: 'Atenção',
-          icon: 'error',
-          text: errorMessage,
-          confirmButtonText: 'Ok',
-        });
-      }
-    });
+    if (this.vaga.id! > 0 && this.validarCamposVaga()) {
+      this.vagasService.alterar(this.vaga.id!, this.vaga).subscribe({
+        next: vaga => {
+          Swal.fire({
+            title: "Sucesso",
+            icon: 'success',
+            text: "Vaga alterada com sucesso!",
+            confirmButtonText: 'Ok',
+          });
+          this.routerNavegacao.navigate(['principal/vagas'], { state: { vagaEditada: this.vaga } });
+        },
+        error: erro => {
+
+          let mensagem = "Ocorreu um erro inesperado.";
+          if (erro.status) {
+            mensagem = this.utilsService.mensagemErroStatus(erro.status);
+          }
+          Swal.fire({
+            title: 'Atenção',
+            icon: 'error',
+            text: mensagem,
+            confirmButtonText: 'Ok',
+          });
+        }
+      });
+    }
   }
+
+  validarCamposVaga(): boolean {
+    let mensagem = "";
+
+    if (!this.vaga.titulo) {
+      mensagem += 'Campo título da vaga inválido!<br><br>';
+    }
+    if (!this.vaga.descricao) {
+      mensagem += 'Campo descrição da vaga inválido!<br><br>';
+    }
+    if (this.vaga.requisitos.length === 0) {
+      mensagem += 'Para gerar/alterar uma vaga é necessario informar ao menos um requisito!<br><br>';
+    }
+
+    if (mensagem) {
+      Swal.fire({
+        title: 'Erros de Validação',
+        html: `<div style="text-align: center;">${mensagem}</div>`,
+        icon: 'error',
+        confirmButtonText: 'Ok',
+      });
+      return false;
+    }
+    return true;
+  }
+
+
+
 }

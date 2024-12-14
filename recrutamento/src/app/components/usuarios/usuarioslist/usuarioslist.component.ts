@@ -1,44 +1,54 @@
 
 import { Component, inject } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { Vaga } from '../../../models/vaga';
 import { VagasService } from '../../../services/vagas.service';
 import { HttpClientModule } from '@angular/common/http';
 import Swal from 'sweetalert2';
+import { Usuario } from '../../../models/usuario';
+import { UsuariosService } from '../../../services/usuarios.service';
 import { UtilsService } from '../../../services/utils.service';
 
 @Component({
-  selector: 'app-vagaslist',
+  selector: 'app-usuarioslist',
   standalone: true,
   imports: [RouterLink, CommonModule, HttpClientModule],
   providers: [
-    VagasService,
+    UsuariosService,
     UtilsService
   ],
-  templateUrl: './vagaslist.component.html',
-  styleUrl: './vagaslist.component.scss'
+  templateUrl: './usuarioslist.component.html',
+  styleUrl: './usuarioslist.component.scss'
 })
-export class VagaslistComponent {
+export class UsuarioslistComponent {
 
-  vagas: Vaga[] = [];
+  usuarios: Usuario[] = [];
   usuarioRole: string | null = null;
+  usuario:Usuario | null = null;
 
-  constructor(private vagasService: VagasService,
-    private utilsService:UtilsService
-  ) {
-    this.listar();
-    this.usuarioRole = sessionStorage.getItem('role');
+  constructor(private usuariosService: UsuariosService,
+              private utilsService:UtilsService,
+              private routerNavegacao: Router){
+       
+     this.usuarioRole = sessionStorage.getItem('role');           
+
+    if(this.isAdmin()){
+      this.listar();
+    }else{
+      this.consultarUsuarioLogado();
+    }            
+    
+    
   }
 
-  isAdmin(): boolean {
+  isAdmin(): boolean {  
     return this.usuarioRole === 'ADMIN';
   }
 
-  listar() {
-    this.vagasService.listar().subscribe({
-      next: vagas => {
-        this.vagas = vagas;
+  listar(){
+    this.usuariosService.listar().subscribe({
+      next: usuarios => {
+        this.usuarios = usuarios;
       },
       error: erro => {
         let mensagem = "Ocorreu um erro inesperado.";
@@ -55,8 +65,12 @@ export class VagaslistComponent {
     });
   }
 
+   consultarUsuarioLogado() {
+      const usuarioLogadoId = Number(sessionStorage.getItem('id'));
+      this.routerNavegacao.navigate(['principal/usuarios/alterar', usuarioLogadoId]);
+    }
 
-  excluir(vaga: Vaga) {
+  excluir(usuario: Usuario){
     Swal.fire({
       title: 'Tem certeza que deseja excluir este registro?',
       icon: 'warning',
@@ -66,7 +80,7 @@ export class VagaslistComponent {
       denyButtonText: 'Não',
     }).then((result) => {
       if (result.isConfirmed) {
-        this.vagasService.excluir(vaga.id!).subscribe({
+        this.usuariosService.excluir(usuario.id!).subscribe({
           next: mensagem => {
             Swal.fire({
               title: 'Sucesso',
@@ -75,9 +89,8 @@ export class VagaslistComponent {
               confirmButtonText: 'Ok',
             });
             this.listar();
-          },
+          },   
           error: erro => {
-
             let mensagem = "Ocorreu um erro inesperado.";
             if (erro.status) {
               mensagem = this.utilsService.mensagemErroStatus(erro.status);

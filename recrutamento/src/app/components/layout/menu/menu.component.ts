@@ -2,11 +2,12 @@ import { Component } from '@angular/core';
 import { MdbCollapseModule } from 'mdb-angular-ui-kit/collapse';
 import { LoginService } from '../../../services/login.service';
 import { HttpClientModule } from '@angular/common/http';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-menu',
   standalone: true,
-  imports: [MdbCollapseModule, HttpClientModule],
+  imports: [MdbCollapseModule, CommonModule, HttpClientModule],
   providers: [
     LoginService
   ],
@@ -15,11 +16,18 @@ import { HttpClientModule } from '@angular/common/http';
 })
 export class MenuComponent {
 
+  usuarioRole: string | null = null;
 
-  constructor(private loginService: LoginService){}
+  constructor(private loginService: LoginService){
+    this.usuarioRole = sessionStorage.getItem('role');
+  }
 
   sair() {
     this.loginService.sair();
+  }
+
+  isAdmin(): boolean {  
+    return this.usuarioRole === 'ADMIN';
   }
 
 }

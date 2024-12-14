@@ -15,6 +15,10 @@ export class LoginService {
   logar(email:string, senha:string){
     return this.http.post<any>(this.API,{email,senha}).pipe(
       tap((value) => {
+
+        if (!value.token || value.id === 0) {
+          throw new Error('Email e/ou senha inválidos.');
+        }
         sessionStorage.setItem("id", value.id);
         sessionStorage.setItem("nome", value.nome);
         sessionStorage.setItem("email", value.email);
@@ -22,7 +26,10 @@ export class LoginService {
         sessionStorage.setItem("token", value.token);
       }),
       catchError((error) => {
-        return throwError(() => new Error('Falha na autenticação. Verifique suas credenciais.'));
+        if(error.message !== 'Email e/ou senha inválidos.'){
+          error.message = 'Falha na autenticação. Tente novamente mais tarde.';
+        }
+        return throwError(() => new Error(error.message ));
       })
     )
   }

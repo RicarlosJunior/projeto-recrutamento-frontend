@@ -3,13 +3,15 @@ import { CandidaturasService } from '../../../services/candidaturas.service';
 import { HttpClientModule } from '@angular/common/http';
 import Swal from 'sweetalert2';
 import { Candidatura } from '../../../models/candidatura';
+import { UtilsService } from '../../../services/utils.service';
 
 @Component({
   selector: 'app-candidaturaslist',
   standalone: true,
   imports: [HttpClientModule],
   providers: [
-    CandidaturasService
+    CandidaturasService,
+    UtilsService
   ],
   templateUrl: './candidaturaslist.component.html',
   styleUrl: './candidaturaslist.component.scss'
@@ -19,7 +21,8 @@ export class CandidaturaslistComponent {
 
   candidaturas: Candidatura[] = [];
 
-  constructor(private candidaturasService: CandidaturasService) {
+  constructor(private candidaturasService: CandidaturasService, 
+              private utilsService: UtilsService) {
     this.consultarCandidaturasPorUsuario();
   }
 
@@ -32,10 +35,14 @@ export class CandidaturaslistComponent {
         this.candidaturas = candidaturas;
       },
       error: erro => {
+        let mensagem = "Ocorreu um erro inesperado.";
+        if (erro.status) {
+          mensagem = this.utilsService.mensagemErroStatus(erro.status);
+        }
         Swal.fire({
           title: 'Atenção',
           icon: 'error',
-          text: 'Ocorreu um erro inesperado.',
+          text: mensagem,
           confirmButtonText: 'Ok',
         });
       }

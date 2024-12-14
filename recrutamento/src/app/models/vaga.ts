@@ -4,4 +4,5 @@ export class Vaga {
     descricao:string = "";
     requisitos:string[] = [];
     responsavelId:number = 0;
+    statusVaga:string = "ABERTA";
 }

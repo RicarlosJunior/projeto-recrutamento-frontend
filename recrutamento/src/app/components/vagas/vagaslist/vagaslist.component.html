@@ -17,17 +17,19 @@
                 <tr>
                   <th>Id</th>
                   <th>Titulo</th>
+                  <th>Status</th>
                   <th class="centro">Ações</th>
                 </tr>
               </thead>
               <tbody>
                 <tr *ngIf="vagas.length === 0">
-                  <td colspan="3" class="esquerda">Sem registros para exibir</td>
+                  <td colspan="4" class="esquerda">Sem registros para exibir</td>
                 </tr>
                 @for (vaga of vagas; track $index) {
                   <tr>
                     <td style="width: 10%;">{{vaga.id}}</td>
-                    <td style="width: 70%;">{{vaga.titulo}}</td>
+                    <td style="width: 60%;">{{vaga.titulo}}</td>
+                    <td style="width: 10%;">{{vaga.statusVaga}}</td>
                     <td class="centro" style="width: 20%;">
                       <button type="button" class="btn btn-primary me-2 btn-sm btn-rounded" mdbRipple routerLink="/principal/vagas/alterar/{{vaga.id}}" >
                         Detalhar

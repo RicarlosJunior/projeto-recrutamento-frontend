@@ -22,6 +22,7 @@ export class VagasService {
         descricao: vaga.descricao,
         requisitos: vaga.requisitos,
         responsavelId: vaga.responsavelId,
+        statusVaga:vaga.statusVaga,
       })),
       catchError((error) => {
         return throwError(() => new Error(error));
@@ -37,6 +38,7 @@ export class VagasService {
         descricao: vaga.descricao,
         requisitos: vaga.requisitos,
         responsavelId: vaga.responsavelId,
+        statusVaga:vaga.statusVaga,
       })),
       catchError((error) => {
         return throwError(() => new Error(error));
@@ -53,6 +55,7 @@ export class VagasService {
           descricao: vaga.descricao,
           requisitos: vaga.requisitos,
           responsavelId: vaga.responsavelId,
+          statusVaga:vaga.statusVaga,
         }))
         ,
         catchError((error) => {
@@ -75,6 +78,7 @@ export class VagasService {
         descricao: vaga.descricao,
         requisitos: vaga.requisitos,
         responsavelId: vaga.responsavelId,
+        statusVaga:vaga.statusVaga,
       })),
       catchError((error) => {
         return throwError(() => new Error(error));
