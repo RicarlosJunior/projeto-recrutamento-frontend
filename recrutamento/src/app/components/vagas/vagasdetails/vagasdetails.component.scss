@@ -1,0 +1,29 @@
+/* Defina a altura máxima da tabela e permita rolagem */
+.table {
+    width: 98%; /* Garante que a tabela ocupe toda a largura disponível */
+  }
+  
+  .tabela-body {
+    display: block; /* Para permitir o scroll dentro do corpo da tabela */
+    max-height: 130px; /* Defina a altura máxima conforme necessário */
+    overflow-y: auto; /* Adiciona rolagem vertical se necessário */
+  }
+  
+  th, td {
+    width: auto; /* Garante que as células de tabela ajustem o conteúdo corretamente */
+    text-align: left; /* Alinha o texto à esquerda, pode ser ajustado conforme o necessário */
+  }
+  
+  thead, tbody tr {
+    display: table; /* Para garantir que as linhas da tabela sejam exibidas como uma tabela */
+    width: 98%;
+    table-layout: fixed; /* Para garantir que as colunas se ajustem corretamente */
+  }
+  
+  th {
+    background-color: #f8f9fa; /* Cor de fundo para o cabeçalho da tabela */
+  }
+
+  .padding-left{
+    padding-left: 50px;
+  }

@@ -1,0 +1,7 @@
+export type LoginResponse = {
+    id:number;
+	nome:string;
+	email:string;
+	tipo:string;
+	token:string;
+}

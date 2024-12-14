@@ -1,0 +1,47 @@
+<br/>
+<div class="container">
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="card">
+        <div class="card-body">
+          <h3>Vagas Disponíveis</h3>
+          <br>
+          <div class="direita">
+            <button type="button" class="btn btn-primary btn-rounded" mdbRipple routerLink="/principal/vagas/criar" *ngIf="isAdmin()">
+              Nova Vaga
+            </button>
+          </div>
+          <br/>
+          <table class="table table-sm">
+              <thead>
+                <tr>
+                  <th>Id</th>
+                  <th>Titulo</th>
+                  <th class="centro">Ações</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngIf="vagas.length === 0">
+                  <td colspan="3" class="esquerda">Sem registros para exibir</td>
+                </tr>
+                @for (vaga of vagas; track $index) {
+                  <tr>
+                    <td style="width: 10%;">{{vaga.id}}</td>
+                    <td style="width: 70%;">{{vaga.titulo}}</td>
+                    <td class="centro" style="width: 20%;">
+                      <button type="button" class="btn btn-primary me-2 btn-sm btn-rounded" mdbRipple routerLink="/principal/vagas/alterar/{{vaga.id}}" >
+                        Detalhar
+                      </button>
+                      <button type="button" class="btn btn-danger btn-sm btn-rounded" mdbRipple (click)="excluir(vaga)" *ngIf="isAdmin()">
+                        Excluir
+                      </button>
+                    </td>
+                  </tr>
+                }
+              </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

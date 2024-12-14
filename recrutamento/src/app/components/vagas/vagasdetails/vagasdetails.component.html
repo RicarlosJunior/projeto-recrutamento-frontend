@@ -1,0 +1,115 @@
+<br />
+<div class="container">
+  <div class="row">
+    <div class="col-lg-2"></div>
+    <div class="col-lg-8">
+      <div class="card">
+        <div class="card-body">
+          <h3>Detalhes da Vaga</h3>
+          <br>
+          <div class="row">
+            <div class="col-2">
+              <mdb-form-control>
+                <input mdbInput type="text" id="id" class="form-control" [(ngModel)]="vaga.id" [readonly]="true" />
+                <label mdbLabel class="form-label" for="id">Id</label>
+              </mdb-form-control>
+            </div>
+            <div class="col-10">
+              <mdb-form-control>
+                <input mdbInput type="text" id="titulo" class="form-control" [(ngModel)]="vaga.titulo" />
+                <label mdbLabel class="form-label" for="titulo">Titulo da Vaga</label>
+              </mdb-form-control>
+            </div>
+          </div>
+          <br>
+          <div class="row">
+            <div class="col-12">
+              <mdb-form-control>
+                <textarea mdbTextArea id="descricao" [(ngModel)]="vaga.descricao" rows="3" class="form-control"></textarea>
+                <label mdbLabel class="form-label" for="descricao">Descrição</label>
+              </mdb-form-control>
+            </div>
+          </div>
+          <br>
+          <div class="centro">
+            <h6>Requisitos</h6>
+            <hr class="hr" />
+          </div>
+          <br>
+          <table class="table table-sm">
+            <thead>
+              <tr>
+                <th style="width: 90%;">Descrição</th>
+                <th class="centro" style="width: 10%;">Ações</th>
+              </tr>
+            </thead>
+            <tbody class="tabela-body">
+              <tr *ngIf="vaga.requisitos.length === 0">
+                <td colspan="2" class="esquerda">Sem registros para exibir</td>
+              </tr>
+              <tr *ngFor="let requisito of vaga.requisitos; let i = index">
+                <td style="width: 90%;">{{ requisito }}</td>
+                <td class="centro" style="width: 10%;">
+                  <button type="button" class="btn btn-danger btn-sm btn-rounded" mdbRipple
+                    (click)="excluirRequisisto(requisito)" *ngIf="isAdmin()">
+                    Excluir
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <br>
+          <div class="row">
+            <div class="col-md-9">
+              <button type="button" class="btn btn-primary me-2 btn-sm btn-rounded" mdbRipple  (click)="candidatar()">
+                Candidatar
+              </button>
+              <button type="button" class="btn btn-primary me-2 btn-sm btn-rounded" mdbRipple (click)="criar()"
+                *ngIf="(vaga.id == null || vaga.id == 0) && isAdmin()">
+                Gravar
+              </button>
+              <button type="button" class="btn btn-primary me-2 btn-sm btn-rounded" mdbRipple (click)="alterar()"
+                *ngIf="vaga.id! > 0 && isAdmin()">
+                Alterar
+              </button>
+              <button type="button" class="btn btn-primary me-2 btn-sm btn-rounded" mdbRipple
+                routerLink="/principal/vagas">
+                Voltar
+              </button>
+            </div>
+            <div class="col-md-3 direita padding-left">
+              <button type="button" class="btn btn-primary  me-2 btn-sm btn-rounded" mdbRipple (click)="abrirModal()" *ngIf="isAdmin()">
+                Novo Requisito
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-2"></div>
+    </div>
+  </div>
+</div>
+
+
+<!--Modal de Itens (VendaProduto)-->
+<ng-template #modalRequisito>
+  <div class="modal-body">
+    <h3>Requisito para a vaga</h3>
+    <br>
+    <div class="col-12">
+      <mdb-form-control>
+        <input mdbInput type="text" id="requisito" class="form-control" [(ngModel)]="requisito" />
+        <label mdbLabel class="form-label" for="requisito">Descrição</label>
+      </mdb-form-control>
+    </div>
+    <br>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-primary me-2 btn-sm btn-rounded" mdbRipple (click)="adicionarRequisito()" *ngIf="isAdmin()">
+      Confirmar
+    </button>
+    <button type="button" class="btn btn-primary btn-sm btn-rounded" mdbRipple (click)="modalRef.close()">
+      Fechar
+    </button>
+  </div>
+</ng-template>
