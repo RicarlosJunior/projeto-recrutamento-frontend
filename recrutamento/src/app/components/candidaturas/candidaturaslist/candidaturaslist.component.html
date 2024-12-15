@@ -1,1 +1,72 @@
 
+<br/>
+<div class="container">
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="card">
+        <div class="card-body">
+          <h3>Candidaturas</h3> 
+          <br/>
+          <table class="table table-sm">
+              <thead>
+                <tr>
+                  <th>Codigo</th>
+                  <th>Vaga</th>
+                  <th>Candidato</th>
+                  <th>Status</th>
+                  <th class="centro">Ações</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngIf="candidaturas.length === 0">
+                  <td colspan="5" class="esquerda">Sem registros para exibir</td>
+                </tr>
+                @for (candidatura of candidaturas; track $index) {
+                  <tr>
+                    <td style="width: 10%;">{{candidatura.id}}</td>
+                    <td style="width: 30%;">{{candidatura.vaga?.titulo}}</td>
+                    <td style="width: 30%;">{{candidatura.usuario?.nome}}</td>
+                    <td style="width: 10;">{{candidatura.statusCandidatura}}</td>
+                    <td class="centro" style="width: 30%;">
+                      <button type="button" class="btn btn-primary me-2 btn-sm btn-rounded" mdbRipple (click)="aprovar(candidatura)" *ngIf="isAdmin()">
+                            Aprovar
+                        </button>
+                        <button type="button" class="btn btn-danger btn-sm btn-rounded" mdbRipple (click)="abrirModalReprovacao(candidatura)" *ngIf="isAdmin()">
+                            Reprovar
+                        </button>
+                        <button type="button" class="btn btn-info btn-sm btn-rounded" mdbRipple (click)="abrirModal(candidatura)">
+                            Devolutiva
+                         </button>
+                      </td>
+                  </tr>
+                }
+              </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!--Modal de Devolutiva (Devolutiva)-->
+<ng-template #modalDevolutiva>
+  <div class="modal-body">
+    <h3>Feedback da candidatura</h3>
+    <br>
+    <div class="col-12">
+      <mdb-form-control>
+        <textarea placeholder="Descrição da Vaga" mdbTextArea id="descricao" [(ngModel)]="candidatura!.devolutiva" rows="5" class="form-control" [readonly]="!isAdmin()"></textarea>
+      </mdb-form-control>
+    </div>
+    <br>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-primary btn-sm btn-rounded" mdbRipple (click)="reprovar()" *ngIf="isAdmin()">
+      Confirmar
+    </button>
+    <button type="button" class="btn btn-primary btn-sm btn-rounded" mdbRipple (click)="modalRef.close()">
+      Fechar
+    </button>
+  </div>
+</ng-template>

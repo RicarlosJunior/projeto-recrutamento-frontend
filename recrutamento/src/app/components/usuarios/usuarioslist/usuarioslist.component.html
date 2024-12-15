@@ -15,7 +15,7 @@
           <table class="table table-sm">
               <thead>
                 <tr>
-                  <th>Id</th>
+                  <th>Código</th>
                   <th>Nome</th>
                   <th>Email</th>
                   <th>Tipo</th>
@@ -28,9 +28,9 @@
                 </tr>
                 @for (usuario of usuarios; track $index) {
                   <tr>
-                    <td style="width: 5%;">{{usuario.id}}</td>
+                    <td style="width: 10%;">{{usuario.id}}</td>
                     <td style="width: 30%;">{{usuario.nome}}</td>
-                    <td style="width: 30%;">{{usuario.email}}</td>
+                    <td style="width: 25%;">{{usuario.email}}</td>
                     <td style="width: 15%;">{{usuario.tipoUsuario}}</td>
                     <td class="centro" style="width: 20%;">
                       <button type="button" class="btn btn-primary me-2 btn-sm btn-rounded" mdbRipple routerLink="/principal/usuarios/alterar/{{usuario.id}}" >

@@ -11,12 +11,13 @@
             <div class="col-2">
               <mdb-form-control>
                 <input mdbInput type="text" id="id" class="form-control" [(ngModel)]="vaga.id" [readonly]="true" />
-                <label mdbLabel class="form-label" for="id">Id</label>
+                <label mdbLabel class="form-label" for="id">Código</label>
               </mdb-form-control>
             </div>
             <div class="col-10">
               <mdb-form-control>
-                <input mdbInput type="text" id="titulo" class="form-control" [(ngModel)]="vaga.titulo" [readonly]="!isAdmin()"/>
+                <input mdbInput type="text" id="titulo" class="form-control" [(ngModel)]="vaga.titulo"
+                  [readonly]="!isAdmin()" />
                 <label mdbLabel class="form-label" for="titulo">Título da Vaga</label>
               </mdb-form-control>
             </div>
@@ -25,7 +26,8 @@
           <div class="row">
             <div class="col-12">
               <mdb-form-control>
-                <textarea placeholder="Descrição da Vaga" mdbTextArea id="descricao" [(ngModel)]="vaga.descricao" rows="3" class="form-control" [readonly]="!isAdmin()"></textarea>
+                <textarea placeholder="Descrição da Vaga" mdbTextArea id="descricao" [(ngModel)]="vaga.descricao"
+                  rows="3" class="form-control" [readonly]="!isAdmin()"></textarea>
               </mdb-form-control>
             </div>
           </div>
@@ -33,27 +35,27 @@
           <label mdbLabel class="form-label" style="padding-right:15px;">Status da vaga:</label>
           <div class="form-check form-check-inline">
             <input class="form-check-input" type="radio" name="inlineRadioOptions" id="aberta" value="ABERTA"
-              [(ngModel)]="vaga.statusVaga" [disabled]="!isAdmin()"/>
+              [(ngModel)]="vaga.statusVaga" [disabled]="!isAdmin()" />
             <label class="form-check-label" for="aberta">Aberta</label>
           </div>
           <div class="form-check form-check-inline">
             <input class="form-check-input" type="radio" name="inlineRadioOptions" id="fechada" value="FECHADA"
-              [(ngModel)]="vaga.statusVaga" [disabled]="!isAdmin()"/>
+              [(ngModel)]="vaga.statusVaga" [disabled]="!isAdmin()" />
             <label class="form-check-label" for="fechada">Fechada</label>
           </div>
           <div class="form-check form-check-inline">
             <input class="form-check-input" type="radio" name="inlineRadioOptions" id="cancelada" value="CANCELADA"
-              [(ngModel)]="vaga.statusVaga" [disabled]="!isAdmin()"/>
+              [(ngModel)]="vaga.statusVaga" [disabled]="!isAdmin()" />
             <label class="form-check-label" for="cancelada">Cancelada</label>
           </div>
           <div class="form-check form-check-inline">
             <input class="form-check-input" type="radio" name="inlineRadioOptions" id="preenchida" value="PREENCHIDA"
-              [(ngModel)]="vaga.statusVaga" [disabled]="!isAdmin()"/>
+              [(ngModel)]="vaga.statusVaga" [disabled]="!isAdmin()" />
             <label class="form-check-label" for="preenchida">Preenchida</label>
           </div>
           <div class="form-check form-check-inline">
             <input class="form-check-input" type="radio" name="inlineRadioOptions" id="suspensa" value="SUSPENSA"
-              [(ngModel)]="vaga.statusVaga" [disabled]="!isAdmin()"/>
+              [(ngModel)]="vaga.statusVaga" [disabled]="!isAdmin()" />
             <label class="form-check-label" for="fechada">Suspensa</label>
           </div>
           <br>
@@ -85,7 +87,7 @@
           <div class="row">
             <div class="col-md-9">
               <button type="button" class="btn btn-primary me-2 btn-sm btn-rounded" mdbRipple
-                [disabled]="vaga.statusVaga != 'ABERTA'" (click)="candidatar()"   *ngIf="vaga.id! > 0">
+                [disabled]="(vaga.statusVaga != 'ABERTA' || carregando)" (click)="candidatar()" *ngIf="vaga.id! > 0">
                 Candidatar
               </button>
               <button type="button" class="btn btn-primary me-2 btn-sm btn-rounded" mdbRipple (click)="criar()"
@@ -116,7 +118,13 @@
 </div>
 
 
-<!--Modal de Itens (VendaProduto)-->
+<div class="text-center" *ngIf="carregando">
+  <div class="spinner-border" style="width: 3rem; height: 3rem;" role="status">
+    <span class="visually-hidden">Carregando...</span>
+  </div>
+</div>
+
+<!--Modal de Itens (Requisitos)-->
 <ng-template #modalRequisito>
   <div class="modal-body">
     <h3>Requisito para a vaga</h3>

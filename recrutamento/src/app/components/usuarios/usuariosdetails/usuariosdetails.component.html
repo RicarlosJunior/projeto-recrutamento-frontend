@@ -11,7 +11,7 @@
             <div class="col-2">
               <mdb-form-control>
                 <input mdbInput type="text" id="id" class="form-control" [(ngModel)]="usuario.id" [readonly]="true" />
-                <label mdbLabel class="form-label" for="id">Id</label>
+                <label mdbLabel class="form-label" for="id">Código</label>
               </mdb-form-control>
             </div>
             <div class="col-10">
@@ -32,18 +32,12 @@
           </div>
           <br>
           <div class="row" *ngIf="(usuario.id == null || usuario.id == 0 || (usuario.id === usuarioLogadoId))">
-            <div class="col-6">
+            <div class="col-12">
               <mdb-form-control>
-                <input mdbInput type="password" id="senha" class="form-control" [(ngModel)]="usuario.senha" />
+                <input mdbInput type="password" id="senha" class="form-control" [(ngModel)]="usuario.senha" placeholder="********" />
                 <label mdbLabel class="form-label" for="senha">Senha</label>
               </mdb-form-control>
             </div>
-            <div class="col-6">
-                <mdb-form-control>
-                  <input mdbInput type="password" id="confirmSenha" class="form-control" [(ngModel)]="confirmeSenha" />
-                  <label mdbLabel class="form-label" for="confirmSenha">Confirme Senha</label>
-                </mdb-form-control>
-              </div>
           </div>
           <br>
           <label mdbLabel class="form-label" style="padding-right:15px;">Tipo de Usuário:</label>

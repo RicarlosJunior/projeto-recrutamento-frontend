@@ -17,9 +17,11 @@ import { CommonModule } from '@angular/common';
 export class MenuComponent {
 
   usuarioRole: string | null = null;
+  nomeUsuarioLogado: string | null = null;
 
   constructor(private loginService: LoginService){
     this.usuarioRole = sessionStorage.getItem('role');
+    this.nomeUsuarioLogado = sessionStorage.getItem('nome');
   }
 
   sair() {

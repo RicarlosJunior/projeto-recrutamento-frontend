@@ -8,11 +8,10 @@ export class UtilsService {
   constructor() { }
 
   mensagemErroStatus(erroStatus:number):string{
-    console.log('erro'+erroStatus)
-    let mensagem = "Ocorreu um erro inesperado.";
+    let mensagem = "Não foi possível realizar essa operação.";
     switch (erroStatus) {
       case 401:
-        mensagem = 'Você não está autorizado a acessar este recurso.';
+        mensagem = 'Acesso não autorizado. Token inválido ou ausente. Por favor, faça login.';
         break;
       case 403:
         mensagem = 'Acesso negado! Você não tem permissão para acessar este recurso.';

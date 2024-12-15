@@ -1,8 +1,7 @@
 
-import { Component, inject } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { VagasService } from '../../../services/vagas.service';
 import { HttpClientModule } from '@angular/common/http';
 import Swal from 'sweetalert2';
 import { Usuario } from '../../../models/usuario';
@@ -37,8 +36,6 @@ export class UsuarioslistComponent {
     }else{
       this.consultarUsuarioLogado();
     }            
-    
-    
   }
 
   isAdmin(): boolean {  
@@ -68,7 +65,7 @@ export class UsuarioslistComponent {
    consultarUsuarioLogado() {
       const usuarioLogadoId = Number(sessionStorage.getItem('id'));
       this.routerNavegacao.navigate(['principal/usuarios/alterar', usuarioLogadoId]);
-    }
+  }
 
   excluir(usuario: Usuario){
     Swal.fire({
@@ -81,11 +78,11 @@ export class UsuarioslistComponent {
     }).then((result) => {
       if (result.isConfirmed) {
         this.usuariosService.excluir(usuario.id!).subscribe({
-          next: mensagem => {
+          next: () => {
             Swal.fire({
               title: 'Sucesso',
               icon: 'success',
-              text: mensagem,
+              text: 'Operação realizada com sucesso.',
               confirmButtonText: 'Ok',
             });
             this.listar();

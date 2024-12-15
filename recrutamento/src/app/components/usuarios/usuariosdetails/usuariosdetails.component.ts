@@ -25,7 +25,6 @@ export class UsuariosdetailsComponent {
 
     usuario: Usuario = new Usuario();
     usuarioRole: string | null = null;
-    confirmeSenha:string = "";
     usuarioLogadoId = Number(sessionStorage.getItem('id'));
 
     constructor(private router: ActivatedRoute,
@@ -70,7 +69,7 @@ export class UsuariosdetailsComponent {
           if (this.validarCamposUsuario()) {
       
             this.usuariosService.criar(this.usuario).subscribe({
-              next: usuario => {
+              next: () => {
                 Swal.fire({
                   title: "Sucesso",
                   icon: 'success',
@@ -99,7 +98,7 @@ export class UsuariosdetailsComponent {
         alterar() {
           if (this.usuario.id! > 0 && this.validarCamposUsuario()) {
             this.usuariosService.alterar(this.usuario.id!, this.usuario).subscribe({
-              next: usuario => {
+              next: () => {
                 Swal.fire({
                   title: "Sucesso",
                   icon: 'success',
@@ -133,16 +132,6 @@ export class UsuariosdetailsComponent {
             }
             if (!this.usuario.email) {
               mensagem += 'Campo email inválido!<br><br>';
-            }
-            if (!this.usuario.senha) {
-              mensagem += 'Campo senha inválido!<br><br>';
-            }
-
-            if (!this.confirmeSenha) {
-              mensagem += 'Campo confirme senha inválido!<br><br>';
-            }
-            if (this.confirmeSenha != this.usuario.senha) {
-              mensagem += 'Senhas incorretas!<br><br>';
             }
 
             if (mensagem) {

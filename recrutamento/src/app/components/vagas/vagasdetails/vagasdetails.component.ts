@@ -36,14 +36,8 @@ export class VagasdetailsComponent {
   requisito!: string;
   vaga: Vaga = new Vaga();
   usuarioRole: string | null = null;
+  carregando:boolean = false;
 
-  statusVaga = [
-    'ABERTA',
-    'FECHADA',
-    'CANCELADA',
-    'PREENCHIDA',
-    'SUSPENSA'
-  ]
 
   constructor(private router: ActivatedRoute,
     private vagasService: VagasService,
@@ -137,6 +131,8 @@ export class VagasdetailsComponent {
 
     const usuarioId = Number(sessionStorage.getItem('id'));
 
+    this.carregando = true;
+
     this.candidaturasService.candidatar(usuarioId, this.vaga.id!).subscribe({
       next: mensagem => {
         Swal.fire({
@@ -145,10 +141,11 @@ export class VagasdetailsComponent {
           text: mensagem,
           confirmButtonText: 'Ok',
         });
+        this.carregando = false;
         this.routerNavegacao.navigate(['principal/vagas']);
       },
       error: erro => {
-
+        this.carregando = false;
         let mensagem = "Ocorreu um erro inesperado.";
         if (erro.status) {
           mensagem = this.utilsService.mensagemErroStatus(erro.status);
@@ -159,7 +156,7 @@ export class VagasdetailsComponent {
           text: mensagem,
           confirmButtonText: 'Ok',
         });
-      }
+      },
     });
   }
 
@@ -169,7 +166,7 @@ export class VagasdetailsComponent {
       this.vaga.responsavelId = Number(sessionStorage.getItem('id'));
 
       this.vagasService.criar(this.vaga).subscribe({
-        next: vaga => {
+        next: () => {
           Swal.fire({
             title: "Sucesso",
             icon: 'success',
@@ -198,7 +195,7 @@ export class VagasdetailsComponent {
   alterar() {
     if (this.vaga.id! > 0 && this.validarCamposVaga()) {
       this.vagasService.alterar(this.vaga.id!, this.vaga).subscribe({
-        next: vaga => {
+        next: () => {
           Swal.fire({
             title: "Sucesso",
             icon: 'success',

@@ -25,6 +25,8 @@ export class CandidaturasService {
             id:candidatura.id,
             statusCandidatura: candidatura.statusCandidatura,
             vaga: candidatura.vaga,
+            usuario: candidatura.usuario,
+            devolutiva: candidatura.devolutiva,
           }))
           ,
           catchError((error) => {
@@ -34,4 +36,51 @@ export class CandidaturasService {
       );
     }
 
+    listar(): Observable<Candidatura[]> {
+      return this.http.get<any[]>(this.API).pipe(
+       map(candidaturasRecebidas =>
+          candidaturasRecebidas.map(candidatura => ({
+           id:candidatura.id,
+           statusCandidatura: candidatura.statusCandidatura,
+           vaga: candidatura.vaga,
+           usuario: candidatura.usuario,
+           devolutiva: candidatura.devolutiva,
+         }))
+         ,
+         catchError((error) => {
+           return throwError(() => new Error(error));
+         })
+       )
+     );
+   }
+
+   aprovar(id: number, candidatura: Candidatura): Observable<Candidatura> {
+    return this.http.put<any>(this.API + "/aprovar/" + id, candidatura).pipe(
+      map(candidatura => ({
+        id:candidatura.id,
+        statusCandidatura: candidatura.statusCandidatura,
+        vaga: candidatura.vaga,
+        usuario: candidatura.usuario,
+        devolutiva: candidatura.devolutiva,
+      })),
+      catchError((error) => {
+        return throwError(() => new Error(error));
+      })
+    );
+  }
+
+  reprovar(id: number, candidatura: Candidatura): Observable<Candidatura> {
+    return this.http.put<any>(this.API + "/reprovar/" + id, candidatura).pipe(
+      map(candidatura => ({
+        id:candidatura.id,
+        statusCandidatura: candidatura.statusCandidatura,
+        vaga: candidatura.vaga,
+        usuario: candidatura.usuario,
+        devolutiva: candidatura.devolutiva,
+      })),
+      catchError((error) => {
+        return throwError(() => new Error(error));
+      })
+    );
+  }
 }

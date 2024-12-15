@@ -1,5 +1,5 @@
 
-import { Component, inject } from '@angular/core';
+import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { Vaga } from '../../../models/vaga';
@@ -67,11 +67,11 @@ export class VagaslistComponent {
     }).then((result) => {
       if (result.isConfirmed) {
         this.vagasService.excluir(vaga.id!).subscribe({
-          next: mensagem => {
+          next: () => {
             Swal.fire({
               title: 'Sucesso',
               icon: 'success',
-              text: mensagem,
+              text: 'Operação realizada com sucesso.',
               confirmButtonText: 'Ok',
             });
             this.listar();
