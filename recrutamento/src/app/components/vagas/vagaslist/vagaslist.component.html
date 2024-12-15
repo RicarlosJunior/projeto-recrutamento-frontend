@@ -6,10 +6,22 @@
         <div class="card-body">
           <h3>Vagas</h3>
           <br>
-          <div class="direita">
-            <button type="button" class="btn btn-primary btn-rounded" mdbRipple routerLink="/principal/vagas/criar" *ngIf="isAdmin()">
-              Nova Vaga
-            </button>
+          <div class="row">
+            <div class="col-8">
+                <div>
+                  <button type="button" class="btn btn-primary btn-rounded" mdbRipple routerLink="/principal/vagas/criar" *ngIf="isAdmin()">
+                    Nova Vaga
+                  </button>
+                </div>
+            </div>
+            <div class="col-4">
+              <div class="input-group direita">
+                <input type="search" id="pesquisar" class="form-control" [(ngModel)]="requisito" placeholder="Pesquisar vagas" />
+                <button class="btn btn-primary" (click)="pesquisarVagaPorRequisito()">
+                  <i class="fas fa-search"></i>
+                </button>
+              </div>
+            </div>
           </div>
           <br/>
           <table class="table table-sm">

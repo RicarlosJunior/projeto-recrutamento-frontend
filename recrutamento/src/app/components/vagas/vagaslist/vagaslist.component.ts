@@ -7,11 +7,13 @@ import { VagasService } from '../../../services/vagas.service';
 import { HttpClientModule } from '@angular/common/http';
 import Swal from 'sweetalert2';
 import { UtilsService } from '../../../services/utils.service';
+import { FormsModule } from '@angular/forms';
+
 
 @Component({
   selector: 'app-vagaslist',
   standalone: true,
-  imports: [RouterLink, CommonModule, HttpClientModule],
+  imports: [RouterLink, CommonModule, HttpClientModule, FormsModule ],
   providers: [
     VagasService,
     UtilsService
@@ -23,6 +25,7 @@ export class VagaslistComponent {
 
   vagas: Vaga[] = [];
   usuarioRole: string | null = null;
+  requisito:string = "";
 
   constructor(private vagasService: VagasService,
     private utilsService:UtilsService
@@ -33,6 +36,26 @@ export class VagaslistComponent {
 
   isAdmin(): boolean {
     return this.usuarioRole === 'ADMIN';
+  }
+
+  pesquisarVagaPorRequisito(){
+    this.vagasService.pesquisarVagaPorRequisito(this.requisito).subscribe({
+      next: vagas => {
+        this.vagas = vagas;
+      },
+      error: erro => {
+        let mensagem = "Não foi possível realizar essa operação.";
+        if (erro.status) {
+          mensagem = this.utilsService.mensagemErroStatus(erro.status);
+        }
+        Swal.fire({
+          title: 'Atenção',
+          icon: 'error',
+          text: mensagem,
+          confirmButtonText: 'Ok',
+        });
+      }
+    });
   }
 
   listar() {

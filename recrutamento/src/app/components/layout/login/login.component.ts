@@ -22,8 +22,8 @@ export class LoginComponent {
   email!: string;
   senha!: string;
 
-  constructor(private loginService: LoginService, 
-              private router: Router){}
+  constructor(private loginService: LoginService,
+    private router: Router) { }
 
   logar() {
     this.loginService.logar(this.email, this.senha).subscribe({

@@ -58,7 +58,6 @@ export class CandidaturaslistComponent {
     this.candidaturasService.consultarCandidaturasPorUsuario(usuarioId).subscribe({
       next: candidaturas => {
         this.candidaturas = candidaturas;
-        console.log('candidatura: ' + this.candidaturas)
       },
       error: erro => {
         let mensagem = "Não foi possível realizar essa operação.";
@@ -139,9 +138,8 @@ export class CandidaturaslistComponent {
     this.candidaturasService.reprovar(this.candidatura!.id!, this.candidatura!).subscribe({
       next: () => {
         Swal.fire({
-          title: "Sucesso",
-          icon: 'error',
-          text: "Candidatura reprovada!",
+          title: "Candidatura reprovada!",
+          icon: 'warning',
           confirmButtonText: 'Ok',
         });
         this.listar();

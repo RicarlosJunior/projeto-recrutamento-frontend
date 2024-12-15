@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
 import { Vaga } from '../models/vaga';
@@ -22,7 +22,7 @@ export class VagasService {
         descricao: vaga.descricao,
         requisitos: vaga.requisitos,
         responsavelId: vaga.responsavelId,
-        statusVaga:vaga.statusVaga,
+        statusVaga: vaga.statusVaga,
       })),
       catchError((error) => {
         return throwError(() => new Error(error));
@@ -38,7 +38,7 @@ export class VagasService {
         descricao: vaga.descricao,
         requisitos: vaga.requisitos,
         responsavelId: vaga.responsavelId,
-        statusVaga:vaga.statusVaga,
+        statusVaga: vaga.statusVaga,
       })),
       catchError((error) => {
         return throwError(() => new Error(error));
@@ -55,7 +55,7 @@ export class VagasService {
           descricao: vaga.descricao,
           requisitos: vaga.requisitos,
           responsavelId: vaga.responsavelId,
-          statusVaga:vaga.statusVaga,
+          statusVaga: vaga.statusVaga,
         }))
         ,
         catchError((error) => {
@@ -78,11 +78,35 @@ export class VagasService {
         descricao: vaga.descricao,
         requisitos: vaga.requisitos,
         responsavelId: vaga.responsavelId,
-        statusVaga:vaga.statusVaga,
+        statusVaga: vaga.statusVaga,
       })),
       catchError((error) => {
         return throwError(() => new Error(error));
       })
     );
   }
+
+  pesquisarVagaPorRequisito(requisito: string): Observable<Vaga[]> {
+
+    const params = new HttpParams().set('requisito', requisito);
+
+    return this.http.get<any[]>(this.API + "/pesquisar", { params }).pipe(
+      map(vagasRececibdas =>
+        vagasRececibdas.map(vaga => ({
+          id: vaga.id,
+          titulo: vaga.titulo,
+          descricao: vaga.descricao,
+          requisitos: vaga.requisitos,
+          responsavelId: vaga.responsavelId,
+          statusVaga: vaga.statusVaga,
+        }))
+        ,
+        catchError((error) => {
+          return throwError(() => new Error(error));
+        })
+      )
+    );
+  }
+
+
 }

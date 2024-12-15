@@ -78,7 +78,6 @@ export class UsuariosdetailsComponent {
                 this.routerNavegacao.navigate(['principal/usuarios'], { state: { usuarioNova: this.usuario } });
               },
               error: erro => {     
-                console.log("erro custom "+erro)
                 let mensagem = "Não foi possível realizar essa operação.";
                 if (erro.status) {
                   mensagem = this.utilsService.mensagemErroStatus(erro.status, erro.message);
