@@ -29,7 +29,7 @@ export class LoginService {
         if(error.message !== 'Email e/ou senha inválidos.'){
           error.message = 'Falha na autenticação. Tente novamente mais tarde.';
         }
-        return throwError(() => new Error(error.message ));
+        return throwError(() => new Error(error.message));
       })
     )
   }

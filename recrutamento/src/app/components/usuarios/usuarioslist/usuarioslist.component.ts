@@ -48,7 +48,7 @@ export class UsuarioslistComponent {
         this.usuarios = usuarios;
       },
       error: erro => {
-        let mensagem = "Ocorreu um erro inesperado.";
+        let mensagem = "Não foi possível realizar essa operação.";
         if (erro.status) {
           mensagem = this.utilsService.mensagemErroStatus(erro.status);
         }
@@ -88,7 +88,7 @@ export class UsuarioslistComponent {
             this.listar();
           },   
           error: erro => {
-            let mensagem = "Ocorreu um erro inesperado.";
+            let mensagem = "Não foi possível realizar essa operação.";
             if (erro.status) {
               mensagem = this.utilsService.mensagemErroStatus(erro.status);
             }

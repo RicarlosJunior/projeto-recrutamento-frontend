@@ -7,7 +7,7 @@ export class UtilsService {
 
   constructor() { }
 
-  mensagemErroStatus(erroStatus:number):string{
+  mensagemErroStatus(erroStatus:number, msg?:string):string{
     let mensagem = "Não foi possível realizar essa operação.";
     switch (erroStatus) {
       case 401:
@@ -16,6 +16,9 @@ export class UtilsService {
       case 403:
         mensagem = 'Acesso negado! Você não tem permissão para acessar este recurso.';
         break;
+      case 409:
+          mensagem = msg!;
+        break;  
       case 500:
         mensagem = 'Ocorreu um erro no servidor. Tente novamente mais tarde.';
         break;

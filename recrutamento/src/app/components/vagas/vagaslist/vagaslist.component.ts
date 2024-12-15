@@ -41,7 +41,7 @@ export class VagaslistComponent {
         this.vagas = vagas;
       },
       error: erro => {
-        let mensagem = "Ocorreu um erro inesperado.";
+        let mensagem = "Não foi possível realizar essa operação.";
         if (erro.status) {
           mensagem = this.utilsService.mensagemErroStatus(erro.status);
         }
@@ -78,7 +78,7 @@ export class VagaslistComponent {
           },
           error: erro => {
 
-            let mensagem = "Ocorreu um erro inesperado.";
+            let mensagem = "Não foi possível realizar essa operação.";
             if (erro.status) {
               mensagem = this.utilsService.mensagemErroStatus(erro.status);
             }

@@ -6,13 +6,13 @@ import { AuthInterceptor } from './app/auth/auth.interceptor';
 
 bootstrapApplication(AppComponent, {
   providers: [
-    HttpClientModule, // HttpClientModule para requisições HTTP
+    HttpClientModule, 
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,
       multi: true,
     },
-    ...appConfig.providers, // Aqui é onde o spread operator é utilizado
+    ...appConfig.providers, 
   ]
 })
   .catch((err) => console.error(err));

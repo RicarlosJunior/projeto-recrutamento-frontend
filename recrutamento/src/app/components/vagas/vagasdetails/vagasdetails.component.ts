@@ -113,7 +113,7 @@ export class VagasdetailsComponent {
       },
       error: erro => {
 
-        let mensagem = "Ocorreu um erro inesperado.";
+        let mensagem = "Não foi possível realizar essa operação.";
         if (erro.status) {
           mensagem = this.utilsService.mensagemErroStatus(erro.status);
         }
@@ -146,7 +146,7 @@ export class VagasdetailsComponent {
       },
       error: erro => {
         this.carregando = false;
-        let mensagem = "Ocorreu um erro inesperado.";
+        let mensagem = "Não foi possível realizar essa operação.";
         if (erro.status) {
           mensagem = this.utilsService.mensagemErroStatus(erro.status);
         }
@@ -177,7 +177,7 @@ export class VagasdetailsComponent {
         },
         error: erro => {
 
-          let mensagem = "Ocorreu um erro inesperado.";
+          let mensagem = "Não foi possível realizar essa operação.";
           if (erro.status) {
             mensagem = this.utilsService.mensagemErroStatus(erro.status);
           }
@@ -206,7 +206,7 @@ export class VagasdetailsComponent {
         },
         error: erro => {
 
-          let mensagem = "Ocorreu um erro inesperado.";
+          let mensagem = "Não foi possível realizar essa operação.";
           if (erro.status) {
             mensagem = this.utilsService.mensagemErroStatus(erro.status);
           }

@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { Usuario } from '../models/usuario';
+import { CustomError } from '../shared/errors/custom-error';
 
 @Injectable({
   providedIn: 'root'
@@ -37,7 +38,7 @@ export class UsuariosService {
 
   criar(usuario: Usuario): Observable<Usuario> {
     return this.http.post<any>(this.API, usuario).pipe(
-      map(vaga => ({
+      map(() => ({
         id: usuario.id,
         nome: usuario.nome,
         email: usuario.email,
@@ -45,7 +46,7 @@ export class UsuariosService {
         tipoUsuario: usuario.tipoUsuario,
       })),
       catchError((error) => {
-        return throwError(() => new Error(error));
+        return throwError(() => new CustomError(error.error, error.status));
       })
     );
   }

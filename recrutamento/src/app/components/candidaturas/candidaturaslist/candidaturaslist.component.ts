@@ -61,7 +61,7 @@ export class CandidaturaslistComponent {
         console.log('candidatura: ' + this.candidaturas)
       },
       error: erro => {
-        let mensagem = "Ocorreu um erro inesperado.";
+        let mensagem = "Não foi possível realizar essa operação.";
         if (erro.status) {
           mensagem = this.utilsService.mensagemErroStatus(erro.status);
         }
@@ -82,7 +82,7 @@ export class CandidaturaslistComponent {
         this.candidaturas = candidaturas;
       },
       error: erro => {
-        let mensagem = "Ocorreu um erro inesperado.";
+        let mensagem = "Não foi possível realizar essa operação.";
         if (erro.status) {
           mensagem = this.utilsService.mensagemErroStatus(erro.status);
         }
@@ -118,7 +118,7 @@ export class CandidaturaslistComponent {
             this.listar();
           },
           error: erro => {
-            let mensagem = "Ocorreu um erro inesperado.";
+            let mensagem = "Não foi possível realizar essa operação.";
             if (erro.status) {
               mensagem = this.utilsService.mensagemErroStatus(erro.status);
             }
@@ -140,7 +140,7 @@ export class CandidaturaslistComponent {
       next: () => {
         Swal.fire({
           title: "Sucesso",
-          icon: 'success',
+          icon: 'error',
           text: "Candidatura reprovada!",
           confirmButtonText: 'Ok',
         });
@@ -149,7 +149,7 @@ export class CandidaturaslistComponent {
       },
       error: erro => {
         this.fecharModal();
-        let mensagem = "Ocorreu um erro inesperado.";
+        let mensagem = "Não foi possível realizar essa operação.";
         if (erro.status) {
           mensagem = this.utilsService.mensagemErroStatus(erro.status);
         }

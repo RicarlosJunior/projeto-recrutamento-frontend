@@ -22,11 +22,8 @@ export class LoginComponent {
   email!: string;
   senha!: string;
 
-  constructor(private loginService: LoginService, private router: Router){}
-
-  novoUsuario(){
-    this.router.navigate(["usuarios/criar"]);
-  }
+  constructor(private loginService: LoginService, 
+              private router: Router){}
 
   logar() {
     this.loginService.logar(this.email, this.senha).subscribe({
@@ -43,5 +40,4 @@ export class LoginComponent {
       }
     });
   }
-
 }

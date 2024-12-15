@@ -9,10 +9,9 @@ export class AuthInterceptor implements HttpInterceptor {
   constructor(private router: Router) {}
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    // Obtém o token do sessionStorage
+    
     const token = sessionStorage.getItem('token');
     if (token) {
-      // Clona a requisição e adiciona o cabeçalho Authorization com o token
       request = request.clone({
         setHeaders: {
           Authorization: `Bearer ${token}`
