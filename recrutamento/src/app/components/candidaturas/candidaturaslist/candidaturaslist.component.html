@@ -34,7 +34,7 @@
                         <button type="button" class="btn btn-danger btn-sm btn-rounded" mdbRipple (click)="abrirModalReprovacao(candidatura)" *ngIf="isAdmin()">
                             Reprovar
                         </button>
-                        <button type="button" class="btn btn-info btn-sm btn-rounded" mdbRipple (click)="abrirModal(candidatura)">
+                        <button type="button" class="btn btn-info btn-sm btn-rounded" mdbRipple (click)="abrirModal(candidatura)" [disabled]="candidatura.devolutiva === null || candidatura.devolutiva === ''">
                             Devolutiva
                          </button>
                       </td>
